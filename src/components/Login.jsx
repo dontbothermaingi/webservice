@@ -10,6 +10,7 @@ function Login({onLogin}) {
   });
 
   const [showPassword, setShowPassword] = useState(false)
+  const access_token = localStorage.getItem("access_token")
   const navigate = useNavigate();
 
 
@@ -28,8 +29,10 @@ function Login({onLogin}) {
     fetch("https://webservice-db-58ug.onrender.com/login", {
       method:'POST',
       headers:{
-        "Content-Type":'application/json'
+        "Content-Type":'application/json',
+        "Authorization" : `Bearer ${access_token}`
       },
+      credentials:'include',
       body:JSON.stringify(formData)
     })
     .then(response => response.json())
