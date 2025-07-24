@@ -1,5 +1,6 @@
-import { Box, Button, TextField, Typography, Fade, Link } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Box, Button, TextField, Typography, Link, IconButton } from "@mui/material";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 
 function Login({onLogin}) {
@@ -8,12 +9,9 @@ function Login({onLogin}) {
     password: "",
   });
 
-  const [showBox, setShowBox] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setShowBox(true);
-  }, []);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -58,7 +56,6 @@ function Login({onLogin}) {
         px: 2,
       }}
     >
-      <Fade in={showBox} timeout={700}>
         <Box
           sx={{
             display: "flex",
@@ -108,7 +105,7 @@ function Login({onLogin}) {
             />
 
             <TextField
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={formData.password}
               onChange={handleChange}
               label="Password"
@@ -117,6 +114,13 @@ function Login({onLogin}) {
               variant="outlined"
               margin="normal"
               required
+              InputProps={{
+                endAdornment:(
+                  <IconButton onClick={() => setShowPassword(prev => !prev)}>
+                    {showPassword? <VisibilityOff/> : <Visibility/>}
+                  </IconButton>
+                )
+              }}
             />
 
             <Button
@@ -151,7 +155,6 @@ function Login({onLogin}) {
             </Link>
           </Typography>
         </Box>
-      </Fade>
     </Box>
   );
 }
